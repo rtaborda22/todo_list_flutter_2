@@ -28,7 +28,7 @@ class TaskFilter extends StatelessWidget {
             child: _buildChip('completed', 'Concluídas'),
           ),
         ],
-      ), 
+      ),
     );
   }
 
@@ -36,10 +36,16 @@ class TaskFilter extends StatelessWidget {
     final isSelected = selectedFilter == value;
     return FilterChip(
       selected: isSelected,
-      label: Center(
-        child: Text(label),
+      // REMOVIDO o Center daqui para evitar bugs de layout vertical
+      label: Text(
+        label,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 13), // Um tamanho ligeiramente menor evita quebras em telas pequenas
       ),
+      // Adicionado para garantir o alinhamento centralizado do texto
+      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
       showCheckmark: false,
       onSelected: (_) => onChanged(value),
     );
   }
+}

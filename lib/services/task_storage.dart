@@ -1,33 +1,29 @@
-import 'dart.convert';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../models//task.dart';
+class Task {
+  final String title;
+  final bool isCompleted;
+  final DateTime date;
 
-class TaskStorage {
-    static donst String storageKey = 'tasks';
+  Task({
+    required this.title,
+    this.isCompleted = false,
+    required this.date,
+  });
 
-Future<List<Task>> loadTask() async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonString = prefs.getString(_storageKey);
-
-    if(jsonString == null) {
-        return [];
-    }
-
-    final List<dynamic> decodedList = jsonDecode (jsonString);
-
-    return decodedList
-       .map((item) => Task.fromJson(item as Map<String,dynamic>))
-       .toList();
+  // 1. Este método precisa existir para o TaskStorage.loadTasks() funcionar:
+  factory Task.fromJson(Map<String, dynamic> json) {
+    return Task(
+      title: json['title'] as String,
+      isCompleted: json['isCompleted'] as bool,
+      date: DateTime.parse(json['date'] as String),
+    );
   }
 
-  Future<void> saveTasks(List<Task> tasks) async{
-    final prefs = awalt SharedPreferences.getInstance();
-
-    final jsonString = jsonEncode(
-        tasks.map((task) => task.toJson()).toList(),
-    );
-
-     await prefs.setString(_storageKey.jsonString);   
+  // 2. Este método precisa existir para o TaskStorage.saveTasks() funcionar:
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'isCompleted': isCompleted,
+      'date': date.toIso8601String(),
+    };
   }
 }
-
