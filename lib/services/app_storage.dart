@@ -18,27 +18,27 @@ class AppStorage {
       await prefs.setString(usernameKey, defaultUserName); // <-- 3. REMOVIDO UNDERLINE ACCIDENTAL
     }
 
-    if (!prefs.containsKey(passwordKey)) { // <-- 4. REMOVIDO UNDERLINE ACCIDENTAL
-      await prefs.setString(passwordKey, defaultPassword); // <-- 5. REMOVIDO UNDERLINE ACCIDENTAL
+    if (!prefs.containsKey(passwordKey)) { 
+      await prefs.setString(passwordKey, defaultPassword); 
     }
   }
 
   Future<bool> loadIsLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(loggedInKey) ?? false; // <-- 6. REMOVIDO UNDERLINE ACCIDENTAL
+    return prefs.getBool(loggedInKey) ?? false; 
   }
 
   Future<void> setLoggedIn(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(loggedInKey, value); // <-- 7. REMOVIDO UNDERLINE ACCIDENTAL
+    await prefs.setBool(loggedInKey, value); 
   }
 
   Future<bool> validateLogin(String username, String password) async {
     await ensureDefaultUser();
     final prefs = await SharedPreferences.getInstance();
 
-    final savedUsername = prefs.getString(usernameKey) ?? defaultUserName; // <-- CORRIGIDO UNDERLINE
-    final savedPassword = prefs.getString(passwordKey) ?? defaultPassword; // <-- CORRIGIDO UNDERLINE
+    final savedUsername = prefs.getString(usernameKey) ?? defaultUserName;
+    final savedPassword = prefs.getString(passwordKey) ?? defaultPassword; 
 
     return username == savedUsername && password == savedPassword;
   }
@@ -46,30 +46,30 @@ class AppStorage {
   Future<String> loadPassword() async {
     await ensureDefaultUser();
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(passwordKey) ?? defaultPassword; // <-- CORRIGIDO UNDERLINE
+    return prefs.getString(passwordKey) ?? defaultPassword; 
   }
 
   Future<void> savedPassword(String password) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(passwordKey, password); // <-- CORRIGIDO UNDERLINE
+    await prefs.setString(passwordKey, password); 
   }
 
   Future<AppSettings> loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
 
     return AppSettings(
-      darkMode: prefs.getBool(darkModeKey) ?? false, // <-- 8. CORRIGIDO DE _darkMod PARA darkModeKey
+      darkmode: prefs.getBool(darkModeKey) ?? false, 
       confirmDelete: prefs.getBool(confirmDeleteKey) ?? true,
     );
   }
 
   Future<void> saveDarkMode(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(darkModeKey, value); // <-- CORRIGIDO PARA darkModeKey (LETRA K MINÚSCULA E SEM UNDERLINE)
+    await prefs.setBool(darkModeKey, value); 
   }
 
   Future<void> saveConfirmDelete(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(confirmDeleteKey, value); // <-- CORRIGIDO PARA confirmDeleteKey (LETRA K MINÚSCULA E SEM UNDERLINE)
+    await prefs.setBool(confirmDeleteKey, value); 
   }
 }
