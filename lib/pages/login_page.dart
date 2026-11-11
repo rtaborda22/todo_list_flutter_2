@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import '../services/app_storage.dart';
 
@@ -18,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-@override
+  @override
   void dispose(){
     _usernameController.clear();
     _passwordController.clear();
@@ -28,7 +30,8 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login() async {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
-    final isValid =  await _appStorage.validateLogin(username, password);
+
+    final isValid = await _appStorage.validateLogin(username, password);
 
     if(!mounted){
       return;
@@ -40,12 +43,11 @@ class _LoginPageState extends State<LoginPage> {
           content: Text('Usuario ou senha incorretos'),
         )
       );
-
       return;
     }
 
-  await _appStorage.setLoggedIn(true);
-  widget.onLogin();
+    await _appStorage.setLoggedIn(true);
+    widget.onLogin();
   }
 
   @override
@@ -73,15 +75,54 @@ class _LoginPageState extends State<LoginPage> {
                     style: textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
-                    
+                  ),
+                  const SizedBox(height: 8,),
+                  Text(
+                    'Organize seu dia',
+                    style: textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
                     ),
+                  ),
+                  const SizedBox(height: 40,),
+                  TextField(
+                    controller: _usernameController,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: 'Usuario',
+                      hintText: 'aluno',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) => _login(),
+                    decoration: InputDecoration(
+                      labelText: 'Senha',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: FilledButton(
+                      onPressed: _login,
+                      child: const Text('Entrar'),
+                    ),
+                  ),
                 ],
               ),
-              )
+            ),
           ),
-        )
         ),
+      ),
     );
   }
 }
-

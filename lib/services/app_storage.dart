@@ -58,7 +58,7 @@ class AppStorage {
     final prefs = await SharedPreferences.getInstance();
 
     return AppSettings(
-      darkmode: prefs.getBool(darkModeKey) ?? false, 
+      darkMode: prefs.getBool(darkModeKey) ?? false, 
       confirmDelete: prefs.getBool(confirmDeleteKey) ?? true,
     );
   }
